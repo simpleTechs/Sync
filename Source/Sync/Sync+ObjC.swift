@@ -71,4 +71,15 @@ public extension Sync {
             self.changes(changes, inEntityNamed: entityName, predicate: predicate, dataStack: dataStack, operations: operations.operationOptions, completion: completion)
         }
     }
+    
+    class func compatibleChanges(_ changes: [[String: Any]],
+                           inEntityNamed entityName: String,
+                           localKey: String,
+                           remoteKey: String,
+                           context: NSManagedObjectContext,
+                           predicate: NSPredicate?,
+                           inserted: (_ json: [String: Any]) -> Void,
+                           updated: (_ json: [String: Any], _ updatedObject: NSManagedObject) -> Void) {
+            DataFilter.changes(changes, inEntityNamed: entityName, predicate: predicate, operations: .all, localPrimaryKey: localKey, remotePrimaryKey: remoteKey, context: context, inserted: inserted, updated: updated)
+        }
 }
